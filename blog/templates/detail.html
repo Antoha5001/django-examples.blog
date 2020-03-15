@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<p>123</p>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>{{ posts }}</h1>
+{% for post in posts %}
+{{post.body}}
+{% endfor %}
+{% comment %} <a href="{% url 'share_post' post.id %}">123</a> {% endcomment %}
+{% endblock content %}

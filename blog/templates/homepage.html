@@ -1,13 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{% for post in posts %}
-    <p>{{ post.title }}123</p>
-    <a href="{% url 'detail' year=post.publish.year month=post.publish.month day=post.publish.day post=post.slug %}">Подробнее</a>
-{% endfor %}
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+
+	{% for post in posts %}
+		<p>{{ post.title }}123</p>
+		<a href="{{ post.get_absolute_url }}">Подробнее</a>
+	{% endfor %}
+	<nav data-pagination>
+	{% comment %} <p>{{page_obj}}</p> {% endcomment %}
+	{% if page_obj.has_previous%}
+	<a href="?page={{ page_obj.previous_page_number }}"><i class="ion-chevron-left"></i></a>
+	{% endif %}
+	<ul>
+		{% if page_obj.has_previous%}
+			{% if page_obj.number|add:'-3' > 1 %}
+				<li><a href="?page=1">1</a>
+			{% endif %}
+			{% if page_obj.number|add:'-3' >= 3 %}
+				<li><a href="?page={{page_obj.previous_page_number|add:'-3'}}">. . .</a>
+			{% endif %}
+		{% endif %}
+		{% if paginator.page_range|length > 1 %}
+			{% for i in paginator.page_range %}
+				{% if page_obj.number == i %}
+					<li class="current"><a href="?page={{ page_obj.number }}">{{page_obj.number}}</a>
+				{% elif i > page_obj.number|add:'-4' and i < page_obj.number|add:'4'%} 	
+					<li ><a href="?page={{ i }}">{{i}}</a>
+				{% endif %}	
+			{% endfor %}		
+		{% endif %}
+		{% if page_obj.has_next %}
+			{% if page_obj.number|add:'4' < page_obj.paginator.num_pages %}
+				<li><a href="?page={{page_obj.next_page_number|add:'3'}}">. . .</a>
+			{% endif %}
+			{% if page_obj.number|add:'3' < page_obj.paginator.num_pages %}
+				<li><a href="?page={{page_obj.paginator.num_pages}}">{{page_obj.paginator.num_pages}}</a>
+			{% endif %}
+		{% endif %}
+
+		{% comment %} <li class=current><a href="?page={{ page_obj.number }}">{{page_obj.number}}</a> {% endcomment %}
+		{% comment %} <li><a href=#2>{{page_obj.number}} of {{page_obj.paginator.num_pages}}</a> {% endcomment %}
+	</ul>
+		{% if page_obj.has_next %}
+
+		<a href="?page={{ page_obj.next_page_number }}"><i class="ion-chevron-right"></i></a>
+		{% endif %}
+	</nav>
+
+
+{% endblock content %}
