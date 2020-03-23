@@ -2,6 +2,7 @@
 {% block content %}
 
 	{% for post in posts %}
+	{{post.id}}	
 		<p>{{ post.title }}123</p>
 		<a href="{{ post.get_absolute_url }}">Подробнее</a>
 	{% endfor %}

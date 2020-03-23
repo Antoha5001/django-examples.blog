@@ -4,6 +4,6 @@
 <h1>{{ posts }}</h1>
 {% for post in posts %}
 {{post.body}}
+<a href="{% url 'blog:share_post' post.id %}">123</a>
 {% endfor %}
-{% comment %} <a href="{% url 'share_post' post.id %}">123</a> {% endcomment %}
 {% endblock content %}

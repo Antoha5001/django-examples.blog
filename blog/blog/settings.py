@@ -120,7 +120,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-password = open('password.txt').readline()
+password = open(os.path.join(BASE_DIR, 'password.txt')).readline()
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'korolev.sergei22@yandex.ru'
